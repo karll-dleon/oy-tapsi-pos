@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OY, TAPSI! ATBP. POS &amp; Records</title>
+
+  <!-- Rounded, chic Google Fonts: Fredoka (headings/buttons) & Nunito (body/tables) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Modular Stylesheets -->
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/auth.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/order-entry.css" />
+  <link rel="stylesheet" href="css/records.css" />
+</head>
+<body>
+  <!-- =====================================================================
+       VIEW 1: AUTH SCREENS (Login, Dedicated Signup, and Forgot Password)
+       ===================================================================== -->
+  <section id="auth-wrapper" class="auth-screen active" aria-label="Authentication Screens">
+    <!-- 1A. LOGIN VIEW -->
+    <div id="login-view" class="auth-card active">
+      <div class="brand-badge">
+        <svg class="icon-svg icon-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 12h18" />
+          <path d="M5 12a7 7 0 0 0 14 0" />
+          <path d="M8 19h8" />
+          <path d="M12 5v3" />
+        </svg>
+        <span>OY, TAPSI! ATBP.</span>
+      </div>
+      <h1 class="auth-title">Welcome Back</h1>
+      <p class="auth-subtitle">
+        Enter your email and password to access your account.
+      </p>
+
+      <form id="login-form" class="auth-form" novalidate>
+        <div class="form-group">
+          <label for="login-email">Email</label>
+          <input
+            type="email"
+            id="login-email"
+            placeholder="karlitodrew05@gmail.com"
+            autocomplete="username"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="login-password">Password</label>
+          <div class="password-input-wrap">
+            <input
+              type="password"
+              id="login-password"
+              placeholder="Enter your password"
+              autocomplete="current-password"
+              required
+            />
+            <button
+              type="button"
+              id="toggle-login-password"
+              class="eye-toggle-btn"
+              aria-label="Show password"
+              aria-pressed="false"
+              title="Show or hide password"
+            >
+              <svg id="eye-open-icon" class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+              <svg id="eye-closed-icon" class="icon-svg hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 3l18 18" />
+                <path d="M10.6 10.6a2 2 0 0 0 2.8 2.8" />
+                <path d="M9.9 5.1A10.9 10.9 0 0 1 12 5c6.5 0 10 7 10 7a17.6 17.6 0 0 1-3.1 4.2" />
+                <path d="M6.6 6.6C4.1 8.5 2 12 2 12s3.5 7 10 7a9.7 9.7 0 0 0 4.3-1" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="auth-meta">
+          <button type="button" id="open-forgot-btn" class="link-btn">Forgot Password?</button>
+        </div>
+
+        <button type="submit" id="login-submit-btn" class="btn-primary btn-full">
+          LOGIN
+        </button>
+
+        <div id="login-feedback" class="feedback-msg" role="status" aria-live="polite"></div>
+
+        <p class="switch-auth-note">
+          Don't have an account?
+          <button type="button" id="open-signup-btn" class="link-btn">Signup</button>
+        </p>
+      </form>
+    </div>
+
+    <!-- 1B. DEDICATED SIGNUP VIEW -->
+    <div id="signup-view" class="auth-card">
+      <div class="brand-badge">
+        <svg class="icon-svg icon-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+          <circle cx="9" cy="7" r="4" />
+          <path d="M19 8v6" />
+          <path d="M22 11h-6" />
+        </svg>
+        <span>CREATE ACCOUNT</span>
+      </div>
+      <h1 class="auth-title">Staff Signup</h1>
+      <p class="auth-subtitle">
+        Register a new account with a combination of letters and numbers for both email and password.
+      </p>
+
+      <form id="signup-form" class="auth-form" novalidate>
+        <div class="form-group">
+          <label for="signup-name">Full Name</label>
+          <input type="text" id="signup-name" placeholder="Karl De Leon" required />
+        </div>
+
+        <div class="form-group">
+          <label for="signup-email">Email</label>
+          <input type="email" id="signup-email" placeholder="kdtheleon21@gmail.com" required />
+        </div>
+
+        <div class="form-group">
+          <label for="signup-password">Password</label>
+          <input type="password" id="signup-password" placeholder="At least 6 chars with numbers" required />
+        </div>
+
+        <div class="form-group">
+          <label for="signup-confirm">Confirm Password</label>
+          <input type="password" id="signup-confirm" placeholder="Re-enter your password" required />
+        </div>
+
+        <button type="submit" class="btn-primary btn-full">CREATE ACCOUNT</button>
+        <div id="signup-feedback" class="feedback-msg" role="status" aria-live="polite"></div>
+
+        <p class="switch-auth-note">
+          Already have an account?
+          <button type="button" id="back-to-login-from-signup" class="link-btn">Back to Login</button>
+        </p>
+      </form>
+    </div>
+
+    <!-- 1C. FORGOT PASSWORD VIEW -->
+    <div id="forgot-view" class="auth-card">
+      <div class="brand-badge">
+        <svg class="icon-svg icon-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="11" width="18" height="11" rx="2" />
+          <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+        </svg>
+        <span>RESET PASSWORD</span>
+      </div>
+      <h1 class="auth-title">Forgot Password</h1>
+      <p class="auth-subtitle">
+        Enter your registered email and set a new password containing both letters and numbers.
+      </p>
+
+      <form id="forgot-form" class="auth-form" novalidate>
+        <div class="form-group">
+          <label for="forgot-email">Registered Email</label>
+          <input type="email" id="forgot-email" placeholder="karlitodrew05@gmail.com" required />
+        </div>
+
+        <div class="form-group">
+          <label for="forgot-new-password">New Password</label>
+          <input type="password" id="forgot-new-password" placeholder="New alphanumeric password" required />
+        </div>
+
+        <button type="submit" class="btn-primary btn-full">UPDATE PASSWORD</button>
+        <div id="forgot-feedback" class="feedback-msg" role="status" aria-live="polite"></div>
+
+        <p class="switch-auth-note">
+          Remembered your password?
+          <button type="button" id="back-to-login-from-forgot" class="link-btn">Back to Login</button>
+        </p>
+      </form>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       VIEW 2: MAIN APPLICATION SHELL
+       ===================================================================== -->
+  <div id="app-shell" class="app-shell hidden">
+    <!-- Left Navigation Sidebar -->
+    <aside class="sidebar" aria-label="Main Navigation">
+      <div>
+        <div class="sidebar-brand">
+          <span class="brand-dot" aria-hidden="true"></span>
+          <span>OY, TAPSI! ATBP.</span>
+        </div>
+
+        <nav class="nav-list">
+          <button type="button" class="nav-item active" data-tab="order-entry" aria-current="page">
+            <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="9" cy="20" r="1.5" />
+              <circle cx="17" cy="20" r="1.5" />
+              <path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 2-1.5L21 7H6" />
+            </svg>
+            <span>ORDER ENTRY</span>
+          </button>
+
+          <button type="button" class="nav-item" data-tab="analytics-records">
+            <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 17l6-6 4 4 8-8" />
+              <path d="M17 7h4v4" />
+            </svg>
+            <span>ANALYTICS &amp; RECORDS</span>
+          </button>
+        </nav>
+      </div>
+
+      <!-- Bottom Admin Profile & Switch/Logout Trigger -->
+      <div class="sidebar-footer">
+        <button type="button" id="admin-profile-btn" class="nav-item admin-trigger" data-tab="admin-profile" title="View Admin Profile">
+          <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="8" r="4" />
+            <path d="M5 20a7 7 0 0 1 14 0" />
+          </svg>
+          <span id="sidebar-admin-label">ADMIN USER 123</span>
+        </button>
+
+        <button type="button" id="logout-btn" class="nav-item logout-btn" title="Sign out or switch account">
+          <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+            <path d="M16 17l5-5-5-5" />
+            <path d="M21 12H9" />
+          </svg>
+          <span>SWITCH / LOGOUT</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Right Content Area -->
+    <main class="main-content">
+      <header class="topbar">
+        <div>
+          <h2 id="page-title" class="page-title">ORDER ENTRY</h2>
+          <p id="page-subtitle" class="page-subtitle">OY, TAPSI! Menu &amp; Live Customer Cart</p>
+        </div>
+        <div id="live-clock" class="clock-pill" aria-label="Current Date and Time">
+          Loading date &amp; time...
+        </div>
+      </header>
+
+      <!-- TAB 1: ORDER ENTRY -->
+      <section id="tab-order-entry" class="tab-panel active" aria-label="Order Entry">
+        <div class="order-layout">
+          <div class="menu-column">
+            <!-- Organized, Clean Category Filter Grid -->
+            <div class="category-wrapper">
+              <div class="category-header-row">
+                <span class="category-heading">MENU CATEGORIES</span>
+                <span class="availability-legend">
+                  <span class="legend-dot available"></span> Available (✓)
+                  <span class="legend-dot unavailable"></span> Sold Out (✕)
+                </span>
+              </div>
+              <div id="category-bar" class="category-bar" role="tablist" aria-label="Menu Categories"></div>
+            </div>
+
+            <div id="menu-grid" class="menu-grid" aria-live="polite"></div>
+          </div>
+
+          <aside class="cart-panel" aria-label="Customer Order Cart">
+            <div class="cart-header">
+              <div class="cart-title-row">
+                <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="9" cy="20" r="1.5" />
+                  <circle cx="17" cy="20" r="1.5" />
+                  <path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 2-1.5L21 7H6" />
+                </svg>
+                <h3>CUSTOMER ORDER</h3>
+              </div>
+              <span id="cart-item-count" class="cart-badge">0 ITEMS</span>
+            </div>
+
+            <div id="cart-items-list" class="cart-items-list">
+              <p class="cart-empty">No items added yet. Click any available menu card to add.</p>
+            </div>
+
+            <div class="cart-footer">
+              <div class="payment-section">
+                <span class="payment-label">PAYMENT METHOD</span>
+                <div class="payment-options" role="group" aria-label="Payment Method">
+                  <button type="button" class="payment-btn active" data-payment="CASH">CASH</button>
+                  <button type="button" class="payment-btn" data-payment="GCASH">GCASH</button>
+                </div>
+              </div>
+
+              <div class="summary-row">
+                <span>SUBTOTAL</span>
+                <strong id="cart-subtotal">P0.00</strong>
+              </div>
+              <div class="summary-row total-row">
+                <span>TOTAL</span>
+                <strong id="cart-total">P0.00</strong>
+              </div>
+
+              <button type="button" id="complete-order-btn" class="btn-complete">
+                COMPLETE ORDER
+              </button>
+              <div id="order-toast" class="order-toast" role="status" aria-live="polite"></div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- TAB 2: ANALYTICS & RECORDS -->
+      <section id="tab-analytics-records" class="tab-panel" aria-label="Analytics and Records">
+        <!-- Enhanced KPI Summary Cards with Icons & Sub-details -->
+        <div class="records-summary">
+          <div class="stat-card">
+            <div class="stat-card-top">
+              <span class="stat-label">TOTAL LOGGED ORDERS</span>
+              <span class="stat-icon-badge crimson-badge" aria-hidden="true">
+                <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2" />
+                  <rect x="9" y="3" width="6" height="4" rx="1" />
+                  <path d="M9 12h6" />
+                  <path d="M9 16h4" />
+                </svg>
+              </span>
+            </div>
+            <strong id="stat-order-count" class="stat-value">0</strong>
+            <span id="stat-order-sub" class="stat-subdetail">0 total items sold in selected period</span>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-card-top">
+              <span class="stat-label">GROSS SALES TOTAL</span>
+              <span class="stat-icon-badge olive-badge" aria-hidden="true">
+                <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="12" y1="2" x2="12" y2="22" />
+                  <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                </svg>
+              </span>
+            </div>
+            <strong id="stat-gross-sales" class="stat-value">P0.00</strong>
+            <span id="stat-avg-order" class="stat-subdetail">Avg. Order Value: P0.00</span>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-card-top">
+              <span class="stat-label">TOP PAYMENT &amp; STATUS</span>
+              <span class="stat-icon-badge espresso-badge" aria-hidden="true">
+                <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                  <polyline points="22 4 12 14.01 9 11.01" />
+                </svg>
+              </span>
+            </div>
+            <strong id="stat-top-payment" class="stat-value stat-accent">IN-MEMORY SYNCED</strong>
+            <span id="stat-sync-sub" class="stat-subdetail">No transactions recorded yet</span>
+          </div>
+        </div>
+
+        <!-- Transaction Logbook with Time Period Filters -->
+        <div class="logbook-card">
+          <div class="logbook-header">
+            <div>
+              <h3>TRANSACTION LOGBOOK</h3>
+              <span class="logbook-hint">Filter completed transactions by timeframe below.</span>
+            </div>
+
+            <div id="logbook-filter-bar" class="logbook-filters" role="tablist" aria-label="Logbook Time Filters">
+              <button type="button" class="filter-pill active" data-filter="ALL">ALL</button>
+              <button type="button" class="filter-pill" data-filter="DAILY">DAILY</button>
+              <button type="button" class="filter-pill" data-filter="WEEKLY">WEEKLY</button>
+              <button type="button" class="filter-pill" data-filter="MONTHLY">MONTHLY</button>
+              <button type="button" class="filter-pill" data-filter="YEARLY">YEARLY</button>
+            </div>
+          </div>
+
+          <div class="table-wrapper">
+            <table class="logbook-table">
+              <thead>
+                <tr>
+                  <th>Order #</th>
+                  <th>Date &amp; Time</th>
+                  <th>Food Item</th>
+                  <th>Qty</th>
+                  <th>Unit Price</th>
+                  <th>Line Total</th>
+                  <th>Payment</th>
+                  <th>Order Total</th>
+                </tr>
+              </thead>
+              <tbody id="records-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: ADMIN PROFILE -->
+      <section id="tab-admin-profile" class="tab-panel" aria-label="Admin Profile">
+        <div class="profile-grid">
+          <div class="profile-card main-profile">
+            <div id="profile-avatar" class="avatar-circle" aria-hidden="true">KD</div>
+            <div class="profile-info">
+              <span id="profile-badge" class="profile-role">ADMIN USER 123</span>
+              <h3 id="profile-name">Karl De Leon</h3>
+              <p id="profile-email">karlitodrew05@gmail.com</p>
+            </div>
+          </div>
+
+          <div class="profile-card">
+            <span class="stat-label">ACCOUNT STATUS</span>
+            <div class="status-pills">
+              <span class="status-pill active-pill">ACTIVE</span>
+              <span id="profile-shift" class="status-pill">SHIFT #2</span>
+            </div>
+            <p class="profile-note">Isolated session active for the currently signed-in account.</p>
+          </div>
+        </div>
+
+        <div class="profile-card details-card">
+          <h3>SESSION &amp; SYSTEM DETAILS</h3>
+          <ul class="details-list">
+            <li><strong>Storefront:</strong> OY, TAPSI! ATBP.</li>
+            <li><strong>Active Terminal:</strong> Desktop POS Web View</li>
+            <li><strong>Data Persistence:</strong> In-Memory Session Logbook</li>
+            <li>
+              <strong>Quick Action:</strong>
+              <button type="button" id="back-to-pos-btn" class="inline-action-btn">Return to Order Entry</button>
+            </li>
+          </ul>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- =====================================================================
+       CONFIRMATION DIALOG MODAL (Switch / Logout Account)
+       ===================================================================== -->
+  <div id="logout-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="logout-modal-title">
+    <div class="modal-card">
+      <div class="modal-icon-wrap" aria-hidden="true">
+        <svg class="icon-svg icon-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+          <line x1="12" y1="9" x2="12" y2="13" />
+          <line x1="12" y1="17" x2="12.01" y2="17" />
+        </svg>
+      </div>
+      <h3 id="logout-modal-title" class="modal-title">Switch or Log Out?</h3>
+      <p id="logout-modal-desc" class="modal-desc">
+        Are you sure you want to log out or switch accounts? Any uncompleted items currently in your customer cart will be cleared.
+      </p>
+      <div class="modal-actions">
+        <button type="button" id="cancel-logout-btn" class="btn-secondary">CANCEL</button>
+        <button type="button" id="confirm-logout-btn" class="btn-primary">YES, LOG OUT</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modular Application Entry Script -->
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
