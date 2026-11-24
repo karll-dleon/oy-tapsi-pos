@@ -1,0 +1,316 @@
+/* ==========================================================================
+   ANALYTICS & RECORDS (KPI ICONS/DETAILS, TIME FILTERS) & ADMIN PROFILE TAB
+   ========================================================================== */
+.records-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.stat-card {
+  background-color: var(--cream-card);
+  border: 2.2px solid var(--espresso);
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: var(--transition-smooth);
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(47, 27, 26, 0.12);
+}
+
+.stat-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.stat-label {
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: var(--espresso);
+  opacity: 0.85;
+}
+
+.stat-icon-badge {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.8px solid var(--espresso);
+  flex-shrink: 0;
+}
+
+.crimson-badge {
+  background-color: var(--crimson-soft);
+  color: var(--crimson);
+}
+
+.olive-badge {
+  background-color: var(--olive-soft);
+  color: var(--olive);
+}
+
+.espresso-badge {
+  background-color: var(--espresso-soft);
+  color: var(--espresso);
+}
+
+.stat-value {
+  font-family: var(--font-display);
+  font-size: 1.65rem;
+  font-weight: 700;
+  color: var(--crimson);
+  line-height: 1.15;
+}
+
+.stat-accent {
+  color: var(--olive);
+  font-size: 1.2rem;
+}
+
+.stat-subdetail {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--espresso);
+  opacity: 0.75;
+}
+
+.logbook-card {
+  background-color: var(--cream-card);
+  border: 2.2px solid var(--espresso);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+}
+
+.logbook-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.logbook-header h3 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--espresso);
+}
+
+.logbook-hint {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--olive);
+}
+
+/* Time Period Filter Bar (All, Daily, Weekly, Monthly, Yearly) */
+.logbook-filters {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  background-color: var(--cream);
+  padding: 6px;
+  border-radius: var(--radius-pill);
+  border: 2px solid var(--espresso);
+}
+
+.filter-pill {
+  border: none;
+  background: transparent;
+  color: var(--espresso);
+  font-family: var(--font-display);
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  padding: 6px 13px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.filter-pill:hover {
+  background-color: var(--olive-soft);
+  color: var(--olive);
+}
+
+.filter-pill.active {
+  background-color: var(--crimson);
+  color: var(--cream);
+}
+
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: var(--radius-sm);
+  border: 1.8px solid var(--espresso);
+}
+
+.logbook-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--cream);
+  font-size: 0.9rem;
+}
+
+.logbook-table th {
+  background-color: var(--crimson);
+  color: var(--cream);
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  text-align: left;
+  padding: 12px 14px;
+  white-space: nowrap;
+}
+
+.logbook-table td {
+  padding: 11px 14px;
+  border-bottom: 1.5px solid var(--espresso-soft);
+  font-weight: 700;
+  color: var(--espresso);
+}
+
+.logbook-table tbody tr:hover {
+  background-color: var(--cream-card);
+}
+
+.empty-table-row td {
+  text-align: center;
+  padding: 26px 14px;
+  color: var(--espresso);
+  opacity: 0.72;
+}
+
+/* Admin Profile Tab */
+.profile-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+.profile-card {
+  background-color: var(--cream-card);
+  border: 2.2px solid var(--espresso);
+  border-radius: var(--radius-md);
+  padding: 22px;
+  transition: var(--transition-smooth);
+}
+
+.profile-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(47, 27, 26, 0.12);
+}
+
+.main-profile {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.avatar-circle {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background-color: var(--crimson);
+  color: var(--cream);
+  border: 2.5px solid var(--espresso);
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.profile-role {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 600;
+  background-color: var(--olive-soft);
+  color: var(--olive);
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  margin-bottom: 4px;
+}
+
+.profile-info h3 {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  color: var(--espresso);
+}
+
+.profile-info p {
+  font-size: 0.9rem;
+  font-weight: 600;
+  opacity: 0.85;
+}
+
+.status-pills {
+  display: flex;
+  gap: 10px;
+  margin: 10px 0 12px;
+}
+
+.status-pill {
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: var(--radius-pill);
+  border: 1.8px solid var(--espresso);
+  background-color: var(--cream);
+}
+
+.active-pill {
+  background-color: var(--olive);
+  color: var(--cream);
+}
+
+.profile-note {
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.details-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  margin-bottom: 12px;
+}
+
+.details-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 0.94rem;
+  font-weight: 600;
+}
+
+.inline-action-btn {
+  background: none;
+  border: none;
+  color: var(--crimson);
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.inline-action-btn:hover {
+  color: var(--olive);
+}
