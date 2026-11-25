@@ -1,0 +1,47 @@
+[
+  {
+    "id": 1,
+    "sku": "SILOG-001",
+    "name": "TAPSILOG",
+    "category": "SILOG MEALS",
+    "price": 105,
+    "stock": 35,
+    "available": true
+  },
+  {
+    "id": 2,
+    "sku": "PARES-001",
+    "name": "PARES BEEF",
+    "category": "PARES MEALS",
+    "price": 120,
+    "stock": 18,
+    "available": true
+  },
+  {
+    "id": 3,
+    "sku": "GOTO-001",
+    "name": "GOTO w/ EGG",
+    "category": "GOTO",
+    "price": 40,
+    "stock": 30,
+    "available": true
+  },
+  {
+    "id": 5,
+    "sku": "SILOG-002",
+    "name": "PORKSILOG",
+    "category": "SILOG MEALS",
+    "price": 90,
+    "stock": 20,
+    "available": true
+  },
+  {
+    "id": 6,
+    "sku": "SILOG-002",
+    "name": "PORKSILOG",
+    "category": "SILOG MEALS",
+    "price": 90,
+    "stock": 20,
+    "available": true
+  }
+]
