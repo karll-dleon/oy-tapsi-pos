@@ -16,5 +16,23 @@
     "password": "$2b$10$ENDz9gzZ4RnmXw2ie475Ne0d1GJDIFx/1hBRMyyek5Tqon6IIOikm",
     "role": "staff",
     "createdAt": "2026-11-28T01:09:01.384Z"
+  },
+  {
+    "id": 3,
+    "fullName": "Anya De Leon",
+    "username": "anya_12",
+    "email": "anya_12@gmail.com",
+    "password": "$2b$10$YiDP5u4j4C569F4E/8v0SuvErm/5fBrpKmnR0rBVwiU7S4SxZ3g/.",
+    "role": "staff",
+    "createdAt": "2026-11-28T10:31:18.930Z"
+  },
+  {
+    "id": 4,
+    "fullName": "Ana De Leon",
+    "username": "analyn_05",
+    "email": "analyn_05@gmail.com",
+    "password": "$2b$10$P5I/QroO20IMT903L9nETey0lmq9hEJ7w7uEahA3wpj.ao6X6Z0Em",
+    "role": "staff",
+    "createdAt": "2026-11-28T10:36:35.823Z"
   }
 ]

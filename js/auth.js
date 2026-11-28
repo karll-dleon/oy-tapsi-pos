@@ -1,7 +1,3 @@
-// ==========================================================================
-// 4. AUTHENTICATION, ACCOUNT ISOLATION & LOGOUT CONFIRMATION DIALOG
-// ==========================================================================
-
 import { accounts } from "./data.js";
 import { state, dom } from "./state.js";
 import {
@@ -11,6 +7,8 @@ import {
   buildInitials
 } from "./utils.js";
 import { renderCart } from "./order.js";
+
+const API_AUTH_URL = "http://localhost:3000/api/auth";
 
 export function showAuthCard(cardId) {
   [dom.loginView, dom.signupView, dom.forgotView].forEach((card) => {
@@ -43,6 +41,31 @@ function findAccountByEmail(email) {
   return null;
 }
 
+function makeUsername(email) {
+  const clean = String(email || "").trim().toLowerCase();
+  const base = clean.includes("@") ? clean.split("@")[0] : clean;
+  return base.replace(/[^a-z0-9._-]/g, "_") || `user_${Date.now()}`;
+}
+
+function buildSessionUser(apiUser, fallbackName, fallbackEmail) {
+  const fullName = apiUser?.fullName || fallbackName || "Staff User";
+  const email = apiUser?.email || fallbackEmail || "";
+  const id = apiUser?.id ?? accounts.length + 1;
+  const roleUpper = String(apiUser?.role || "staff").toUpperCase();
+
+  return {
+    id,
+    name: fullName,
+    fullName,
+    username: apiUser?.username || makeUsername(email),
+    email,
+    role: apiUser?.role || "staff",
+    badge: `${roleUpper} #${id}`,
+    shift: `SHIFT #${id}`,
+    avatar: buildInitials(fullName)
+  };
+}
+
 export function syncProfileForCurrentUser() {
   if (!state.currentUser) return;
   dom.sidebarAdminLabel.textContent = state.currentUser.badge;
@@ -53,7 +76,7 @@ export function syncProfileForCurrentUser() {
   dom.profileShift.textContent = state.currentUser.shift;
 }
 
-export function handleLoginSubmit(event, onLoginSuccess) {
+export async function handleLoginSubmit(event, onLoginSuccess) {
   event.preventDefault();
   const email = dom.loginEmail.value.trim();
   const password = dom.loginPassword.value;
@@ -74,34 +97,52 @@ export function handleLoginSubmit(event, onLoginSuccess) {
     return;
   }
 
-  const matchedAccount = findAccountByEmail(email);
-  if (!matchedAccount || matchedAccount.password !== password) {
+  try {
+    const res = await fetch(`${API_AUTH_URL}/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email,
+        username: makeUsername(email),
+        password
+      })
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      state.currentUser = null;
+      setFeedback(
+        dom.loginFeedback,
+        data.message || "Invalid email or password. Use a registered account or create one via Signup."
+      );
+      return;
+    }
+
+    dom.loginPassword.type = "password";
+    dom.eyeOpenIcon.classList.remove("hidden");
+    dom.eyeClosedIcon.classList.add("hidden");
+
+    state.currentUser = buildSessionUser(data.data, "", email);
+    state.cart = [];
+    renderCart();
+    syncProfileForCurrentUser();
+    setFeedback(dom.loginFeedback, "");
+    dom.authWrapper.classList.remove("active");
+    dom.appShell.classList.remove("hidden");
+    if (typeof onLoginSuccess === "function") {
+      onLoginSuccess("order-entry");
+    }
+  } catch (err) {
     state.currentUser = null;
     setFeedback(
       dom.loginFeedback,
-      "Invalid email or password. Use a registered account or create one via Signup."
+      `Cannot connect to ${API_AUTH_URL}/login. Make sure "node server.js" is running on port 3000.`
     );
-    return;
   }
-
-  // Reset password field to masked state
-  dom.loginPassword.type = "password";
-  dom.eyeOpenIcon.classList.remove("hidden");
-  dom.eyeClosedIcon.classList.add("hidden");
-
-  // Bind session exclusively to authenticated user
-  state.currentUser = matchedAccount;
-  state.cart = [];
-  renderCart();
-  syncProfileForCurrentUser();
-
-  setFeedback(dom.loginFeedback, "");
-  dom.authWrapper.classList.remove("active");
-  dom.appShell.classList.remove("hidden");
-  onLoginSuccess("order-entry");
 }
 
-export function handleSignupSubmit(event) {
+export async function handleSignupSubmit(event) {
   event.preventDefault();
   const name = dom.signupName.value.trim();
   const email = dom.signupEmail.value.trim();
@@ -112,6 +153,7 @@ export function handleSignupSubmit(event) {
     setFeedback(dom.signupFeedback, "Please enter your full name.");
     return;
   }
+
   if (!isValidAlphanumericEmail(email)) {
     setFeedback(
       dom.signupFeedback,
@@ -119,6 +161,7 @@ export function handleSignupSubmit(event) {
     );
     return;
   }
+
   if (!isValidAlphanumericPassword(password)) {
     setFeedback(
       dom.signupFeedback,
@@ -126,34 +169,55 @@ export function handleSignupSubmit(event) {
     );
     return;
   }
+
   if (password !== confirm) {
     setFeedback(dom.signupFeedback, "Passwords do not match.");
     return;
   }
-  if (findAccountByEmail(email)) {
-    setFeedback(dom.signupFeedback, "An account with that email already exists.");
-    return;
+
+  try {
+    const res = await fetch(`${API_AUTH_URL}/signup`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        fullName: name,
+        username: makeUsername(email),
+        email,
+        password,
+        role: "staff"
+      })
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      setFeedback(
+        dom.signupFeedback,
+        data.message || "Signup failed. That email or username may already be registered."
+      );
+      return;
+    }
+
+    const created = buildSessionUser(data.data, name, email);
+    if (!findAccountByEmail(email)) {
+      accounts.push(created);
+    }
+
+    dom.signupForm.reset();
+    showAuthCard("login-view");
+    dom.loginEmail.value = email;
+    dom.loginPassword.value = "";
+    setFeedback(
+      dom.loginFeedback,
+      `Account created for ${email}. Enter your password to sign in.`,
+      true
+    );
+  } catch (err) {
+    setFeedback(
+      dom.signupFeedback,
+      `Cannot connect to ${API_AUTH_URL}/signup. Make sure "node server.js" is running on port 3000.`
+    );
   }
-
-  const nextNum = accounts.length + 123;
-  accounts.push({
-    name,
-    email,
-    password,
-    badge: `STAFF USER ${nextNum}`,
-    shift: `SHIFT #${accounts.length + 1}`,
-    avatar: buildInitials(name)
-  });
-
-  dom.signupForm.reset();
-  showAuthCard("login-view");
-  dom.loginEmail.value = email;
-  dom.loginPassword.value = "";
-  setFeedback(
-    dom.loginFeedback,
-    `Account created for ${email}. Enter your password to sign in.`,
-    true
-  );
 }
 
 export function handleForgotSubmit(event) {
@@ -168,6 +232,7 @@ export function handleForgotSubmit(event) {
     );
     return;
   }
+
   if (!isValidAlphanumericPassword(newPassword)) {
     setFeedback(
       dom.forgotFeedback,
@@ -194,7 +259,6 @@ export function handleForgotSubmit(event) {
   );
 }
 
-// Confirmation Dialog Controls for Switch / Logout
 export function openLogoutConfirmation() {
   dom.logoutModal.classList.remove("hidden");
   dom.cancelLogoutBtn.focus();
@@ -209,7 +273,6 @@ export function confirmAndExecuteLogout() {
   state.currentUser = null;
   state.cart = [];
   renderCart();
-
   dom.appShell.classList.add("hidden");
   dom.authWrapper.classList.add("active");
   dom.loginForm.reset();

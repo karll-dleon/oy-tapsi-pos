@@ -1,7 +1,3 @@
-// ==========================================================================
-// 7. MAIN ENTRY POINT, TAB NAVIGATION & EVENT LISTENER BINDINGS
-// ==========================================================================
-
 import { state, dom } from "./state.js";
 import { updateClock } from "./utils.js";
 import {
@@ -60,7 +56,6 @@ function initApp() {
   updateClock();
   setInterval(updateClock, 30000);
 
-  // Auth Listeners
   dom.loginForm.addEventListener("submit", (e) => handleLoginSubmit(e, switchTab));
   dom.toggleLoginPassword.addEventListener("click", handleTogglePasswordVisibility);
   dom.openSignupBtn.addEventListener("click", () => showAuthCard("signup-view"));
@@ -70,7 +65,6 @@ function initApp() {
   dom.forgotForm.addEventListener("submit", handleForgotSubmit);
   dom.backToLoginFromForgot.addEventListener("click", () => showAuthCard("login-view"));
 
-  // Switch / Logout Confirmation Dialog Listeners
   dom.logoutBtn.addEventListener("click", openLogoutConfirmation);
   dom.cancelLogoutBtn.addEventListener("click", closeLogoutConfirmation);
   dom.confirmLogoutBtn.addEventListener("click", confirmAndExecuteLogout);
@@ -78,24 +72,20 @@ function initApp() {
     if (e.target === dom.logoutModal) closeLogoutConfirmation();
   });
 
-  // Tab Navigation Listeners
   dom.navButtons.forEach((btn) => {
     btn.addEventListener("click", () => switchTab(btn.dataset.tab));
   });
   dom.backToPosBtn.addEventListener("click", () => switchTab("order-entry"));
 
-  // Order Entry & Cart Listeners
   dom.paymentButtons.forEach((btn) => {
     btn.addEventListener("click", () => setPaymentMethod(btn.dataset.payment));
   });
   dom.completeOrderBtn.addEventListener("click", handleCompleteOrder);
 
-  // Analytics Logbook Time Filter Listeners
   dom.logbookFilterButtons.forEach((btn) => {
     btn.addEventListener("click", () => setLogbookFilter(btn.dataset.filter));
   });
 
-  // Initial Renders
   renderCategories();
   renderMenuCards();
   renderCart();

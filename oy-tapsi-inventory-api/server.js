@@ -19,7 +19,23 @@ const MONGODB_URI = process.env.MONGODB_URI;
 let dbConnected = false;
 
 app.use(express.json());
+
+// Allow cross-origin requests from Live Server (e.g., http://127.0.0.1:5500) & local frontends
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(204);
+  }
+  return next();
+});
+
 app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "..")));
 
 // Auth routes (Signup, Login, Fetch Users)
 app.use("/api/auth", authRoutes);
@@ -96,7 +112,9 @@ app.get("/api/items", async (req, res) => {
 
     const allItems = store.getAllItems();
     const list = category
-      ? allItems.filter((item) => String(item.category).toLowerCase() === category.toLowerCase())
+      ? allItems.filter(
+          (item) => String(item.category).toLowerCase() === category.toLowerCase()
+        )
       : allItems;
 
     return res.status(200).json({
@@ -167,6 +185,9 @@ app.post("/api/items", async (req, res) => {
       data: created
     });
   } catch (err) {
+    if (err && err.code === 11000) {
+      return res.status(409).json({ error: "An inventory item with that SKU already exists." });
+    }
     console.error("POST /api/items error:", err);
     return res.status(500).json({ error: "Failed to create inventory item." });
   }
@@ -219,6 +240,9 @@ app.put("/api/items/:id", async (req, res) => {
       data: updated
     });
   } catch (err) {
+    if (err && err.code === 11000) {
+      return res.status(409).json({ error: "An inventory item with that SKU already exists." });
+    }
     console.error("PUT /api/items/:id error:", err);
     return res.status(500).json({ error: "Failed to update inventory item." });
   }
@@ -265,6 +289,12 @@ app.use((err, req, res, next) => {
     return res.status(400).json({ error: "Malformed JSON payload in request body." });
   }
   return next(err);
+});
+
+// Fallback JSON Error Handler
+app.use((err, req, res, next) => {
+  console.error("Unhandled server error:", err);
+  res.status(500).json({ error: "Internal server error." });
 });
 
 async function startServer() {

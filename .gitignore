@@ -1,3 +1,6 @@
 node_modules/
 oy-tapsi-inventory-api/node_modules/
 oy-tapsi-inventory-api/.env
+
+oy-tapsi-inventory-api/.env
+.env
