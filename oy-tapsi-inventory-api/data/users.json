@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "fullName": "OY TAPSI Admin",
+    "username": "admin",
+    "email": "admin@oytapsi.local",
+    "password": "$2b$10$/XffjdeLMZ7yA4V.Yl2SwuUqYduZkLDZAlaFCc1Ey/IaGW.Ugm5qS",
+    "role": "admin",
+    "createdAt": "2026-11-28T01:09:01.169Z"
+  },
+  {
+    "id": 2,
+    "fullName": "Karl Andrew De Leon",
+    "username": "karl_deleon",
+    "email": "karl@oytapsi.local",
+    "password": "$2b$10$ENDz9gzZ4RnmXw2ie475Ne0d1GJDIFx/1hBRMyyek5Tqon6IIOikm",
+    "role": "staff",
+    "createdAt": "2026-11-28T01:09:01.384Z"
+  }
+]
